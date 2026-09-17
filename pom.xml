@@ -14,7 +14,6 @@
         <junit.version>5.13.4</junit.version>
         <pdfbox.version>3.0.5</pdfbox.version>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.pdfbox</groupId>

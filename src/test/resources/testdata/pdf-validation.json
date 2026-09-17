@@ -3,7 +3,7 @@
     "invoice": {
       "fileName": "invoice.pdf",
       "businessValues": {
-        "invoiceNumber": "INV-12345",
+        "invoiceNumber": "INV-1234521",
         "customerId": "CUST-1001",
         "amount": "500",
         "currency": "EUR"

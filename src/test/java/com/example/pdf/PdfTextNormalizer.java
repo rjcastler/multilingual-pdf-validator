@@ -11,6 +11,7 @@ public final class PdfTextNormalizer {
             return "";
         }
 
+
         return Normalizer.normalize(text, Normalizer.Form.NFKC)
                 .replace('\u00A0', ' ')
                 .replaceAll("\\s+", " ")
