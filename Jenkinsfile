@@ -19,23 +19,37 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
+        stage('Build & PDF Validation') {
             steps {
                 sh 'mvn -B clean test'
             }
         }
 
-        stage('Publish Test Results') {
+        stage('Publish JUnit Results') {
             steps {
                 junit allowEmptyResults: true,
                       testResults: 'target/surefire-reports/*.xml'
             }
         }
 
-        stage('Archive Reports') {
+        stage('Publish HTML PDF Report') {
             steps {
-                archiveArtifacts artifacts: 'target/surefire-reports/**',
-                                 allowEmptyArchive: true,
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target/pdf-validation-report',
+                    reportFiles: 'report.html',
+                    reportName: 'Multilingual PDF Validation Report',
+                    includes: 'report.html'
+                ])
+            }
+        }
+
+        stage('Archive PDF Validation Report') {
+            steps {
+                archiveArtifacts artifacts: 'target/pdf-validation-report/report.html',
+                                 allowEmptyArchive: false,
                                  fingerprint: true
             }
         }
@@ -43,11 +57,13 @@ pipeline {
 
     post {
         success {
-            echo 'PDF multilingual validation pipeline completed successfully.'
+            echo 'PDF validation and HTML report publishing completed successfully.'
         }
+
         failure {
-            echo 'PDF multilingual validation pipeline failed.'
+            echo 'PDF validation pipeline failed. Check the JUnit and HTML reports.'
         }
+
         always {
             cleanWs()
         }

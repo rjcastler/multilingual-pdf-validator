@@ -1,0 +1,48 @@
+{
+  "documents": {
+    "invoice": {
+      "fileName": "invoice.pdf",
+      "businessValues": {
+        "invoiceNumber": "INV-12345",
+        "customerId": "CUST-1001",
+        "amount": "500",
+        "currency": "EUR"
+      },
+      "languages": {
+        "en": {
+          "requiredText": [
+            "INVOICE",
+            "Invoice Number",
+            "Customer ID",
+            "Amount Due",
+            "Payment Due Date",
+            "Payment reference"
+          ],
+          "dateText": "15 October 2026"
+        },
+        "de": {
+          "requiredText": [
+            "RECHNUNG",
+            "Rechnungsnummer",
+            "Kundennummer",
+            "Fälliger Betrag",
+            "Zahlungsziel",
+            "Zahlungsreferenz"
+          ],
+          "dateText": "15. Oktober 2026"
+        },
+        "nl": {
+          "requiredText": [
+            "FACTUUR",
+            "Factuurnummer",
+            "Klantnummer",
+            "Te betalen bedrag",
+            "Vervaldatum",
+            "Betalingskenmerk"
+          ],
+          "dateText": "15 oktober 2026"
+        }
+      }
+    }
+  }
+}
