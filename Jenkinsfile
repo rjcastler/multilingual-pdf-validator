@@ -19,9 +19,15 @@ pipeline {
             }
         }
 
-        stage('Build & PDF Validation') {
+        stage('Run PDF Validation Tests') {
             steps {
-                sh 'mvn -B clean test'
+                sh '''
+            mvn clean test || TEST_RESULT=$?
+
+            mvn surefire-report:report
+
+            exit ${TEST_RESULT:-0}
+        '''
             }
         }
 
@@ -34,14 +40,14 @@ pipeline {
 
         stage('Publish HTML PDF Report') {
             steps {
-                publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'target/pdf-validation-report',
-                    reportFiles: 'report.html',
-                    reportName: 'Multilingual PDF Validation Report',
-                    includes: 'report.html'
+                publishHTML([
+                        allowMissing: false,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'target/reports',
+                        reportFiles: 'surefire.html',
+                        reportName: 'PDF Validation Report',
+                        reportTitles: 'PDF Validation Test Report'
                 ])
             }
         }
@@ -69,8 +75,8 @@ pipeline {
                     allowMissing: false,
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
-                    reportDir: 'target/site',
-                    reportFiles: 'surefire-report.html',
+                    reportDir: 'target/reports',
+                    reportFiles: 'surefire.html',
                     reportName: 'PDF Validation Report',
                     reportTitles: 'PDF Validation Test Report'
             ])
