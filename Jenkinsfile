@@ -65,7 +65,15 @@ pipeline {
         }
 
         always {
-            cleanWs()
+            publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: true,
+                    keepAll: true,
+                    reportDir: 'target/site',
+                    reportFiles: 'surefire-report.html',
+                    reportName: 'PDF Validation Report',
+                    reportTitles: 'PDF Validation Test Report'
+            ])
         }
     }
 }
